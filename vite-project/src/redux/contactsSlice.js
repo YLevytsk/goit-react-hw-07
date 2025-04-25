@@ -1,4 +1,4 @@
-// src/redux/contactsSlice.js
+
 import { createSlice, createSelector } from '@reduxjs/toolkit';
 import { fetchContacts, addContact, deleteContact } from './contactsOps';
 import { selectNameFilter } from './filtersSlice';
@@ -12,10 +12,10 @@ const initialState = {
 const contactsSlice = createSlice({
   name: 'contacts',
   initialState,
-  reducers: {}, // не нужен, всё в extraReducers
+  reducers: {}, 
   extraReducers: (builder) => {
     builder
-      // fetchContacts
+    
       .addCase(fetchContacts.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -29,7 +29,7 @@ const contactsSlice = createSlice({
         state.error = action.payload;
       })
 
-      // addContact
+     
       .addCase(addContact.pending, (state) => {
         state.error = null;
       })
@@ -40,7 +40,7 @@ const contactsSlice = createSlice({
         state.error = action.payload;
       })
 
-      // deleteContact
+      
       .addCase(deleteContact.fulfilled, (state, action) => {
         state.items = state.items.filter(contact => contact.id !== action.payload);
       })
@@ -52,16 +52,12 @@ const contactsSlice = createSlice({
 
 export default contactsSlice.reducer;
 
-//
-// ✅ Селекторы:
-//
+
 export const selectContacts = state => state.contacts.items;
 export const selectLoading = state => state.contacts.loading;
 export const selectError = state => state.contacts.error;
 
-//
-// ✅ Мемоизированный селектор:
-//
+
 export const selectFilteredContacts = createSelector(
   [selectContacts, selectNameFilter],
   (contacts, filter) => {
